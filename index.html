@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>REMOLINO — Heladería artesanal · Nieve de garrafa</title>
+<meta name="description" content="REMOLINO, heladería artesanal de barrio. Nieve de garrafa, soft-serve y dos bolas sin remordimientos. Pídelo ya.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23FFF6EC'/%3E%3Ccircle cx='16' cy='12' r='8' fill='%23FFB3C7'/%3E%3Cpath d='M9 16 L16 30 L23 16 Z' fill='%23DDA758'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://images.pexels.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:ital,wght@0,400;0,700;0,800;1,400&family=Chewy&display=swap" rel="stylesheet">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.3.1/dist/model-viewer.min.js"></script>
+<style>
+  :root{
+    --crema:#FFF6EC;
+    --blush:#F2C6CF;
+    --polvo:#AEDCE5;
+    --menta:#A8E6CF;
+    --mango:#FFD97D;
+    --cereza:#E23D51;
+    --tinta:#3A2A24;
+    --display:"Fredoka",sans-serif;
+    --body:"Nunito",sans-serif;
+    --fun:"Chewy",cursive;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{background:var(--blush);overflow-x:clip}
+  body{
+    background:var(--blush);color:var(--tinta);
+    font-family:var(--body);font-size:1.0625rem;line-height:1.65;
+    overflow-x:clip;
+  }
+  ::selection{background:var(--cereza);color:var(--crema)}
+  img{max-width:100%;display:block}
+
+  /* ============ RIG DE PARALLAX CSS PURO (Keith Clark) — solo desktop ============ */
+  @media (min-width:800px){
+    body{overflow:hidden;height:100vh;height:100svh}
+    #pv{
+      height:100vh;height:100svh;
+      overflow-y:auto;overflow-x:hidden;
+      perspective:1px;perspective-origin:50% 50%;
+      scrollbar-width:none;
+    }
+    #pv::-webkit-scrollbar{display:none}
+    #hero{transform-style:preserve-3d}
+    .capa-lejos{
+      position:absolute;inset:-20% 0;pointer-events:none;
+      transform:translateZ(-2px) scale(3);
+    }
+    .capa-media{
+      position:absolute;inset:-10% 0;pointer-events:none;
+      transform:translateZ(-1px) scale(2);
+    }
+  }
+  @media (max-width:799px){
+    .capa-lejos,.capa-media{position:absolute;inset:0;pointer-events:none}
+  }
+
+  /* ============ HERO ============ */
+  #hero{
+    position:relative;min-height:100vh;min-height:100svh;
+    background:
+      radial-gradient(circle at var(--mx,30%) var(--my,30%), rgba(255,246,236,.55), transparent 42%),
+      var(--blush);
+    overflow:hidden;
+    display:grid;align-items:center;
+    padding:10vh max(6vw, env(safe-area-inset-left, 0px));
+  }
+  .nube{
+    position:absolute;background:rgba(255,246,236,.85);border-radius:999px;
+  }
+  .nube::before,.nube::after{
+    content:"";position:absolute;background:inherit;border-radius:50%;
+  }
+  .nube::before{width:55%;height:160%;left:12%;bottom:18%}
+  .nube::after{width:42%;height:120%;right:14%;bottom:28%}
+  .chispa{
+    position:absolute;width:14px;height:5px;border-radius:999px;
+  }
+  #hero-grid{
+    position:relative;z-index:5;
+    display:grid;grid-template-columns:1.15fr .85fr;gap:4vw;align-items:center;
+    max-width:1200px;margin:0 auto;width:100%;
+  }
+  @media (max-width:799px){ #hero-grid{grid-template-columns:1fr;text-align:center;gap:2vh} }
+  #hero h1{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(2.9rem,7vw,6.4rem);line-height:.98;
+    letter-spacing:.01em;color:var(--tinta);white-space:nowrap;
+  }
+  #hero h1 .w{display:inline-block}
+  #hero .sub{
+    margin-top:2.5vh;font-size:clamp(1.05rem,1.8vw,1.35rem);font-weight:700;
+    max-width:34ch;
+  }
+  @media (max-width:799px){ #hero .sub{margin-inline:auto} }
+  .badge{
+    display:inline-block;margin-top:3vh;
+    font-family:var(--fun);font-size:clamp(1rem,1.6vw,1.3rem);
+    background:var(--mango);color:var(--tinta);
+    border:3px solid var(--tinta);border-radius:999px;
+    box-shadow:4px 4px 0 var(--tinta);
+    padding:.5em 1.3em;transform:rotate(-3deg);
+  }
+  .btn{
+    display:inline-block;margin-top:3.5vh;margin-left:14px;
+    font-family:var(--display);font-weight:600;
+    font-size:clamp(1rem,1.6vw,1.25rem);
+    background:var(--cereza);color:var(--crema);text-decoration:none;
+    border:3px solid var(--tinta);border-radius:999px;
+    box-shadow:5px 5px 0 var(--tinta);
+    padding:16px 38px;min-height:44px;
+    transition:transform .18s cubic-bezier(.34,1.56,.64,1), box-shadow .18s cubic-bezier(.34,1.56,.64,1);
+  }
+  @media (hover:hover) and (pointer:fine){
+    .btn:hover{transform:translate(-2px,-2px) rotate(-1.5deg);box-shadow:8px 8px 0 var(--tinta)}
+  }
+  .btn:focus-visible{outline:3px dashed var(--cereza);outline-offset:4px}
+  #zdog-wrap{position:relative;display:grid;place-items:center;min-width:0}
+  #helado3d{
+    width:min(34vw,380px);height:min(52vh,460px);
+    background:transparent;cursor:grab;position:relative;z-index:6;
+  }
+  #helado3d:active{cursor:grabbing}
+  @media (max-width:799px){ #helado3d{width:min(72vw,300px);height:min(44vh,340px);margin:0 auto} }
+  #helado3d-blob{
+    position:absolute;width:min(30vw,330px);aspect-ratio:1;
+    background:rgba(255,246,236,.75);
+    border-radius:50% 50% 46% 54% / 38% 38% 62% 62%;
+    animation:blobmorph 8s ease-in-out infinite;
+    filter:blur(2px);
+  }
+  @media (max-width:799px){ #helado3d-blob{width:min(62vw,260px)} }
+  @keyframes blobmorph{
+    0%,100%{border-radius:50% 50% 46% 54% / 38% 38% 62% 62%}
+    33%{border-radius:54% 46% 52% 48% / 44% 34% 66% 56%}
+    66%{border-radius:46% 54% 44% 56% / 36% 44% 56% 64%}
+  }
+  #zdog-hint{
+    font-family:var(--fun);font-size:.95rem;color:var(--tinta);
+    opacity:.75;transform:rotate(2deg);margin-top:-8px;
+  }
+
+  /* ============ DIVISOR GOTEO ============ */
+  .goteo{display:block;width:100%;height:auto;margin-bottom:-2px;position:relative;z-index:4}
+
+  /* ============ SABORES ============ */
+  #sabores{
+    background:
+      repeating-linear-gradient(45deg, rgba(58,42,36,.05) 0 2px, transparent 2px 18px),
+      repeating-linear-gradient(-45deg, rgba(58,42,36,.05) 0 2px, transparent 2px 18px),
+      var(--crema);
+    padding:12vh 6vw 14vh;text-align:center;
+  }
+  .kicker{
+    font-family:var(--fun);font-size:clamp(1rem,1.8vw,1.4rem);color:var(--cereza);
+  }
+  h2.seccion{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(2.4rem,6.5vw,4.8rem);line-height:1.05;margin-top:8px;
+  }
+  #cards{
+    display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:clamp(16px,2.5vw,32px);max-width:1200px;margin:7vh auto 0;
+  }
+  @media (max-width:1023px){ #cards{grid-template-columns:repeat(2,minmax(0,1fr))} }
+  @media (max-width:519px){ #cards{grid-template-columns:1fr;max-width:340px} }
+  .card{
+    background:#FFFDF8;border:3px solid var(--tinta);border-radius:26px;
+    box-shadow:5px 5px 0 var(--tinta);
+    padding:16px 16px 22px;text-align:left;
+    transform-style:preserve-3d;transform:rotate(var(--rot,0deg));
+    will-change:transform;
+  }
+  .card:nth-child(1){--rot:-1.4deg}
+  .card:nth-child(2){--rot:1.1deg}
+  .card:nth-child(3){--rot:-.8deg}
+  .card:nth-child(4){--rot:1.6deg}
+  .card .ph{
+    border-radius:18px;overflow:hidden;border:3px solid var(--tinta);
+    aspect-ratio:4/5;transform:translateZ(30px);
+  }
+  .card .ph img{width:100%;height:100%;object-fit:cover}
+  .card h3{
+    font-family:var(--display);font-weight:600;font-size:1.35rem;
+    margin-top:14px;transform:translateZ(40px);
+  }
+  .card p{font-size:.95rem;margin-top:4px;transform:translateZ(35px)}
+  .precio{
+    display:inline-block;margin-top:12px;
+    font-family:var(--fun);font-size:1.1rem;
+    background:var(--menta);border:3px solid var(--tinta);border-radius:999px;
+    box-shadow:3px 3px 0 var(--tinta);
+    padding:.3em 1em;transform:rotate(-2deg) translateZ(50px);
+  }
+
+  /* ============ SABOR DEL MES ============ */
+  #mes{
+    background:var(--polvo);padding:14vh 6vw;overflow:hidden;position:relative;
+  }
+  #mes-grid{
+    position:relative;max-width:1100px;margin:0 auto;
+    display:grid;grid-template-columns:1fr 1fr;gap:5vw;align-items:center;
+  }
+  @media (max-width:799px){ #mes-grid{grid-template-columns:1fr;text-align:center} }
+  #blob-stage{position:relative;display:grid;place-items:center}
+  #blob-stage svg{width:min(46vw,520px);height:auto;overflow:visible}
+  @media (max-width:799px){ #blob-stage svg{width:min(84vw,420px)} }
+  #mes-foto{
+    position:absolute;width:62%;aspect-ratio:1;border-radius:50%;overflow:hidden;
+    border:4px solid var(--tinta);box-shadow:6px 6px 0 var(--tinta);
+  }
+  #mes-foto img{width:100%;height:100%;object-fit:cover}
+  #mes h2{text-align:inherit}
+  #mes .cuerpo{margin-top:2vh;font-weight:700;font-size:clamp(1rem,1.6vw,1.2rem);max-width:38ch}
+  @media (max-width:799px){ #mes .cuerpo{margin-inline:auto} }
+
+  /* ============ PROCESO (sección oscura) ============ */
+  #proceso{
+    background:var(--tinta);color:var(--crema);
+    padding:14vh 6vw;position:relative;overflow:hidden;text-align:center;
+  }
+  #proceso .kicker{color:var(--mango)}
+  #lluvia{position:absolute;inset:0;pointer-events:none}
+  .gota-chispa{position:absolute;width:12px;height:5px;border-radius:999px;top:-6%}
+  #pasos{
+    position:relative;max-width:860px;margin:6vh auto 0;
+    display:grid;gap:clamp(40px,8vh,80px);
+  }
+  .paso{
+    position:relative;z-index:2;
+    display:flex;align-items:center;gap:clamp(18px,3vw,34px);text-align:left;
+  }
+  .paso:nth-child(even){flex-direction:row-reverse;text-align:right}
+  .paso .num{
+    flex:0 0 auto;width:clamp(64px,8vw,92px);aspect-ratio:1;
+    display:grid;place-items:center;border-radius:50%;
+    font-family:var(--fun);font-size:clamp(1.6rem,3vw,2.4rem);
+    background:var(--cereza);color:var(--crema);
+    border:3px solid var(--crema);box-shadow:4px 4px 0 rgba(0,0,0,.35);
+    transform:rotate(-4deg);
+  }
+  .paso:nth-child(2) .num{background:var(--menta);color:var(--tinta)}
+  .paso:nth-child(3) .num{background:var(--mango);color:var(--tinta)}
+  .paso h3{font-family:var(--display);font-weight:600;font-size:clamp(1.3rem,2.4vw,1.9rem)}
+  .paso p{opacity:.85;max-width:44ch}
+  #squiggle{
+    position:absolute;left:50%;top:0;height:100%;transform:translateX(-50%);
+    z-index:1;overflow:visible;
+  }
+  #squiggle path{fill:none;stroke:rgba(255,246,236,.5);stroke-width:3;stroke-linecap:round;stroke-dasharray:1 14}
+
+  /* ============ LA PLAZA ============ */
+  #plaza{
+    background:var(--menta);padding:14vh 6vw;text-align:center;
+  }
+  #plaza-foto{
+    width:min(300px,64vw);aspect-ratio:1;border-radius:50%;overflow:hidden;
+    border:4px solid var(--tinta);box-shadow:6px 6px 0 var(--tinta);
+    margin:0 auto 4vh;transform:rotate(-2deg);
+  }
+  #plaza-foto img{width:100%;height:100%;object-fit:cover}
+  #plaza blockquote{
+    font-family:var(--display);font-weight:600;
+    font-size:clamp(1.5rem,3.6vw,2.6rem);line-height:1.25;max-width:22ch;margin:0 auto;
+  }
+  #plaza cite{
+    display:block;margin-top:2vh;font-style:normal;font-family:var(--fun);
+    font-size:1.05rem;color:var(--cereza);
+  }
+
+  /* ============ CTA ============ */
+  #cta{
+    background:var(--mango);padding:14vh 6vw 12vh;text-align:center;
+    position:relative;overflow:hidden;
+  }
+  #cta h2{
+    font-family:var(--display);font-weight:700;
+    font-size:clamp(2.2rem,6.5vw,4.6rem);line-height:1.05;max-width:16ch;margin:0 auto;
+  }
+  #cta .btn{margin-left:0;font-size:clamp(1.1rem,1.8vw,1.4rem);padding:18px 48px}
+  #cta .horario{
+    margin-top:4vh;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+    font-size:clamp(.75rem,1.2vw,.9rem);
+  }
+  .confeti{position:absolute;width:12px;height:6px;border-radius:999px;pointer-events:none;z-index:50}
+
+  /* footer ondulado */
+  #pie{
+    background:var(--tinta);color:var(--crema);text-align:center;
+    padding:6vh 6vw calc(5vh + env(safe-area-inset-bottom, 0px));
+  }
+  #pie .marca{font-family:var(--fun);font-size:1.3rem;color:var(--mango)}
+  #pie p{opacity:.7;font-size:.85rem;margin-top:8px}
+
+  @media (max-height:500px){
+    #hero{min-height:auto;padding-top:10vh;padding-bottom:10vh}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+  }
+</style>
+</head>
+<body>
+<div id="pv">
+
+  <!-- ============ HERO ============ -->
+  <header id="hero" aria-label="Remolino, heladería artesanal">
+    <div class="capa-lejos" aria-hidden="true">
+      <span class="nube" style="left:6%;top:18%;width:150px;height:44px"></span>
+      <span class="nube" style="right:10%;top:32%;width:200px;height:56px"></span>
+      <span class="nube" style="left:34%;top:64%;width:120px;height:36px"></span>
+    </div>
+    <div class="capa-media" id="chispas-hero" aria-hidden="true"></div>
+    <div id="hero-grid">
+      <div>
+        <h1 id="titulo">REMOLINO</h1>
+        <p class="sub">Nieve de garrafa, soft-serve y barquillo recién hecho. Aquí el antojo no se aguanta: se saborea.</p>
+        <span class="badge">100% ANTOJABLE</span>
+        <a class="btn" href="#sabores">VER SABORES</a>
+      </div>
+      <div id="zdog-wrap">
+        <div id="helado3d-blob" aria-hidden="true"></div>
+        <model-viewer id="helado3d" src="helado3d.glb"
+          alt="Cono de helado 3D de tres bolas con chispas — arrastra para girarlo"
+          camera-controls touch-action="pan-y" disable-zoom
+          auto-rotate auto-rotate-delay="0" rotation-per-second="30deg"
+          shadow-intensity="1" shadow-softness="1"
+          exposure="1.15" tone-mapping="neutral"
+          camera-orbit="20deg 75deg 105%" interaction-prompt="none"></model-viewer>
+        <p id="zdog-hint">🌀 gírala en 3D — dale la vuelta completa</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- goteo hacia sabores -->
+  <svg class="goteo" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true" style="background:var(--blush)">
+    <path d="M0 0 L1440 0 L1440 30 Q1380 30 1370 58 Q1360 84 1340 58 Q1330 30 1240 32 Q1140 34 1120 66 Q1105 88 1090 60 Q1080 34 960 32 Q840 30 820 52 Q800 74 780 50 Q765 32 640 32 Q520 32 505 60 Q492 82 478 56 Q466 32 360 30 Q250 28 240 50 Q228 70 214 48 Q204 30 100 30 Q40 30 0 32 Z" fill="#FFF6EC"/>
+  </svg>
+
+  <!-- ============ SABORES ============ -->
+  <section id="sabores" aria-label="Sabores">
+    <p class="kicker">del congelador con amor</p>
+    <h2 class="seccion">Los sabores de la casa</h2>
+    <div id="cards">
+      <article class="card">
+        <div class="ph"><img src="https://images.pexels.com/photos/8093453/pexels-photo-8093453.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Cono con bolas pastel de sherbet" loading="lazy" referrerpolicy="no-referrer"></div>
+        <h3>Remolino arcoíris</h3>
+        <p>Sherbet de frutas con chicle de menta. El favorito de la banda.</p>
+        <span class="precio">$45 · dos bolas</span>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="https://images.pexels.com/photos/14563020/pexels-photo-14563020.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Helado rosa con chispas de colores" loading="lazy" referrerpolicy="no-referrer"></div>
+        <h3>Fresa con chispas</h3>
+        <p>Fresa de verdad, chispas de mentira piadosa.</p>
+        <span class="precio">$40 · dos bolas</span>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="https://images.pexels.com/photos/8589559/pexels-photo-8589559.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Bola de helado de chocolate con chispas saliendo del bote" loading="lazy" referrerpolicy="no-referrer"></div>
+        <h3>Choco abuelita</h3>
+        <p>Chocolate de mesa con canela. Sabe a tarde de lluvia.</p>
+        <span class="precio">$40 · dos bolas</span>
+      </article>
+      <article class="card">
+        <div class="ph"><img src="https://images.pexels.com/photos/1352278/pexels-photo-1352278.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Vitrina de gelato con sabores de colores" loading="lazy" referrerpolicy="no-referrer"></div>
+        <h3>La vitrina entera</h3>
+        <p>Doce sabores que rotan cada semana. Pregunta por el de hoy.</p>
+        <span class="precio">$65 · trío</span>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ SABOR DEL MES ============ -->
+  <section id="mes" aria-label="Sabor del mes">
+    <div id="mes-grid">
+      <div id="blob-stage">
+        <svg viewBox="0 0 400 400" aria-hidden="true">
+          <path id="blobA" fill="#FFF6EC" d="M200 40 C 270 30 350 90 355 170 C 360 250 300 330 215 350 C 130 370 60 310 48 230 C 36 150 130 50 200 40 Z"/>
+          <path id="blobB" fill="none" stroke="none" d="M200 55 C 300 45 340 130 330 200 C 320 270 260 345 180 340 C 100 335 45 260 55 180 C 65 100 100 65 200 55 Z" style="display:none"/>
+        </svg>
+        <div id="mes-foto"><img src="https://images.pexels.com/photos/9227956/pexels-photo-9227956.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Brazo levantando un cono de vainilla doble sobre fondo azul polvo" loading="lazy" referrerpolicy="no-referrer"></div>
+      </div>
+      <div>
+        <p class="kicker">sabor del mes</p>
+        <h2 class="seccion">Vainilla de vaina, doble</h2>
+        <p class="cuerpo">Dos bolas, cero remordimientos. Vaina de Papantla, leche de rancho y barquillo dorado al momento.</p>
+        <span class="badge" style="transform:rotate(2deg)">SOLO EN JULIO</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESO ============ -->
+  <section id="proceso" aria-label="Cómo lo hacemos">
+    <div id="lluvia" aria-hidden="true"></div>
+    <p class="kicker">hecho en casa</p>
+    <h2 class="seccion">De la garrafa a tu mano</h2>
+    <div id="pasos">
+      <svg id="squiggle" viewBox="0 0 40 600" preserveAspectRatio="none" aria-hidden="true" width="40">
+        <path id="squiggle-path" d="M20 0 Q 38 70 20 140 Q 2 210 20 280 Q 38 350 20 420 Q 2 490 20 560 L 20 600"/>
+      </svg>
+      <div class="paso">
+        <span class="num">1</span>
+        <div><h3>Giramos la garrafa</h3><p>Hielo, sal de grano y brazo. Como en la plaza, sin motor y sin prisa.</p></div>
+      </div>
+      <div class="paso">
+        <span class="num">2</span>
+        <div><h3>Fruta de verdad</h3><p>Del mercado de abastos cada mañana. Si no hay mamey, no hay mamey.</p></div>
+      </div>
+      <div class="paso">
+        <span class="num">3</span>
+        <div><h3>Barquillo al momento</h3><p>La plancha está a la vista. Huele a vainilla desde la esquina.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LA PLAZA ============ -->
+  <section id="plaza" aria-label="La plaza">
+    <div id="plaza-foto"><img src="https://images.pexels.com/photos/8933527/pexels-photo-8933527.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Mujer riendo con un cono de helado de fresa" loading="lazy" referrerpolicy="no-referrer"></div>
+    <blockquote>«Sabores que te saben a domingo en la plaza.»</blockquote>
+    <cite>— doña Lupita, clienta de los martes</cite>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section id="cta" aria-label="Pídelo ya">
+    <p class="kicker">¿cono o vaso? sí.</p>
+    <h2>El calorcito no se quita solo — échale nieve.</h2>
+    <a class="btn" href="#pedido" id="btn-pedir">PÍDELO YA</a>
+    <p class="horario">MAR – DOM · 12:00 – 21:00 · PORTAL DE LA PLAZA 8 · GDL</p>
+  </section>
+
+  <footer id="pie">
+    <p class="marca">REMOLINO</p>
+    <p>Nieve artesanal desde la plaza · hecha con leche de verdad y chismecito de barrio</p>
+    <p style="font-size:.72rem;opacity:.5;margin-top:10px">Modelo 3D: «Triple Scoop Ice Cream» de Jarlan Perez (CC-BY) vía Poly Pizza</p>
+  </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/animejs@4.5.0/dist/bundles/anime.umd.min.js"></script>
+<script src="https://unpkg.com/vanilla-tilt@1.8.1/dist/vanilla-tilt.min.js"></script>
+<script>
+(function(){
+  "use strict";
+  var REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var RIG = window.matchMedia("(min-width: 800px)").matches; /* rig CSS activo */
+  var FINE = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var animate = anime.animate, stagger = anime.stagger, onScroll = anime.onScroll,
+      spring = anime.spring, svg = anime.svg, splitText = anime.splitText,
+      utils = anime.utils;
+  var PALETA = ["#E23D51","#A8E6CF","#FFD97D","#F2C6CF","#AEDCE5","#FFF6EC"];
+  var SCROLLER = RIG ? { container: "#pv" } : {};
+  function scrollOpts(extra){ return Object.assign({}, SCROLLER, extra); }
+  var rand = function(a,b){ return a + Math.random()*(b-a); };
+
+  /* ============ CHISPAS DEL HERO (capa media del rig) ============ */
+  (function(){
+    var box = document.getElementById("chispas-hero");
+    for (var i=0;i<26;i++){
+      var s = document.createElement("span");
+      s.className = "chispa";
+      s.style.left = rand(2,96) + "%";
+      s.style.top = rand(4,92) + "%";
+      s.style.background = PALETA[i % 5];
+      s.style.transform = "rotate(" + rand(-60,60) + "deg)";
+      box.appendChild(s);
+    }
+  })();
+
+  /* ============ HELADO 3D REAL (model-viewer + GLB) ============
+     Modelo girable 360°: arrastra para rodarlo, auto-rota en reposo. */
+  (function(){
+    var mv = document.getElementById("helado3d");
+    if (REDUCED && mv) mv.removeAttribute("auto-rotate");
+  })();
+
+  if (REDUCED) return; /* versión estática: todo el contenido ya está en flujo */
+
+  /* ============ HERO: título con resorte + entrada ============ */
+  var split = splitText("#titulo", { chars: true });
+  utils.set("#titulo", { opacity: 1 });
+  animate(split.chars, {
+    y: ["1.1em", "0em"],
+    rotate: [8, 0],
+    opacity: [0, 1],
+    delay: stagger(55, { start: 150 }),
+    ease: spring({ bounce: .45, duration: 700 })
+  });
+  animate("#hero .sub, #hero .badge, #hero .btn, #zdog-hint", {
+    y: [26, 0], opacity: [0, 1],
+    delay: stagger(120, { start: 500 }),
+    ease: "out(3)", duration: 600
+  });
+  animate("#helado3d, #helado3d-blob", {
+    scale: [.4, 1], opacity: [0, 1],
+    ease: spring({ bounce: .5, duration: 900 }), delay: 350
+  });
+
+  /* nubes flotando (loop suave) */
+  document.querySelectorAll(".nube").forEach(function(n, i){
+    animate(n, { x: [0, i % 2 ? 26 : -26], duration: 5200 + i*900, alternate: true, loop: true, ease: "inOutSine" });
+  });
+
+  /* gradiente que sigue el cursor (solo puntero fino) */
+  if (FINE){
+    var hero = document.getElementById("hero");
+    hero.addEventListener("mousemove", function(e){
+      var r = hero.getBoundingClientRect();
+      hero.style.setProperty("--mx", ((e.clientX - r.left) / r.width * 100).toFixed(1) + "%");
+      hero.style.setProperty("--my", ((e.clientY - r.top) / r.height * 100).toFixed(1) + "%");
+    });
+  }
+
+  /* ============ SABORES: cards con spring al entrar + tilt ============ */
+  animate(".card", {
+    y: [70, 0], opacity: [0, 1], rotate: function(el){ return [8, getComputedStyle(el).getPropertyValue("--rot") || 0]; },
+    delay: stagger(110),
+    ease: spring({ bounce: .4, duration: 800 }),
+    autoplay: onScroll(scrollOpts({ enter: "bottom-=80 top", sync: "play" }))
+  });
+  if (FINE){
+    VanillaTilt.init(document.querySelectorAll(".card"), {
+      max: 10, speed: 420, scale: 1.03,
+      glare: true, "max-glare": .22, perspective: 900, gyroscope: false
+    });
+  }
+
+  /* ============ SABOR DEL MES: blob en morph infinito ============ */
+  animate("#blobA", {
+    d: svg.morphTo("#blobB"),
+    duration: 3800, alternate: true, loop: true, ease: "inOutSine"
+  });
+  animate("#mes-foto", {
+    scale: [.6, 1], opacity: [0, 1],
+    ease: spring({ bounce: .45, duration: 900 }),
+    autoplay: onScroll(scrollOpts({ enter: "bottom-=120 top", sync: "play" }))
+  });
+  animate("#mes .seccion, #mes .cuerpo, #mes .badge", {
+    x: [-34, 0], opacity: [0, 1], delay: stagger(120),
+    ease: "out(3)", duration: 600,
+    autoplay: onScroll(scrollOpts({ enter: "bottom-=100 top", sync: "play" }))
+  });
+
+  /* ============ PROCESO: línea squiggly dibujada con el scroll ============ */
+  var drawable = svg.createDrawable("#squiggle-path");
+  animate(drawable, {
+    draw: ["0 0", "0 1"],
+    ease: "inOutQuad",
+    autoplay: onScroll(scrollOpts({ enter: "bottom top+=100", leave: "center center", sync: true }))
+  });
+  animate(".paso", {
+    scale: [.85, 1], opacity: [0, 1], delay: stagger(140),
+    ease: spring({ bounce: .35, duration: 700 }),
+    autoplay: onScroll(scrollOpts({ target: "#pasos", enter: "bottom-=60 top", sync: "play" }))
+  });
+
+  /* lluvia de chispas (meteors → sprinkles) */
+  (function(){
+    var box = document.getElementById("lluvia");
+    for (var i=0;i<22;i++){
+      var g = document.createElement("span");
+      g.className = "gota-chispa";
+      g.style.left = rand(2,97) + "%";
+      g.style.background = PALETA[i % 5];
+      box.appendChild(g);
+      animate(g, {
+        y: ["-4vh", "112vh"],
+        rotate: [rand(-90,90), rand(180,540)],
+        duration: rand(3800, 7600),
+        delay: rand(0, 5200),
+        loop: true, ease: "linear"
+      });
+    }
+  })();
+
+  /* ============ LA PLAZA ============ */
+  animate("#plaza-foto, #plaza blockquote, #plaza cite", {
+    y: [40, 0], opacity: [0, 1], delay: stagger(130),
+    ease: "out(3)", duration: 650,
+    autoplay: onScroll(scrollOpts({ enter: "bottom-=100 top", sync: "play" }))
+  });
+
+  /* ============ CTA: confeti al click ============ */
+  var btnPedir = document.getElementById("btn-pedir");
+  btnPedir.addEventListener("click", function(){
+    var r = btnPedir.getBoundingClientRect();
+    for (var i=0;i<26;i++){
+      var c = document.createElement("span");
+      c.className = "confeti";
+      c.style.left = (r.left + r.width/2) + "px";
+      c.style.top = (r.top + r.height/2) + "px";
+      c.style.position = "fixed";
+      c.style.background = PALETA[i % 5];
+      document.body.appendChild(c);
+      animate(c, {
+        x: rand(-160, 160),
+        y: [0, rand(-140, -30), rand(60, 160)],
+        rotate: rand(-360, 360),
+        opacity: [1, 1, 0],
+        duration: rand(700, 1200),
+        ease: "out(2)",
+        onComplete: function(anim){ anim.targets[0].remove(); }
+      });
+    }
+  });
+  animate("#cta h2, #cta .btn, #cta .horario", {
+    y: [34, 0], opacity: [0, 1], delay: stagger(120),
+    ease: "out(3)", duration: 600,
+    autoplay: onScroll(scrollOpts({ enter: "bottom-=80 top", sync: "play" }))
+  });
+
+  /* ============ srcset Pexels ============ */
+  document.querySelectorAll('img[src*="images.pexels.com"]').forEach(function(img){
+    if (img.srcset) return;
+    img.srcset = [400, 800].map(function(w){
+      return img.src.replace(/([?&])w=\d+/, "$1w=" + w) + " " + w + "w";
+    }).join(", ");
+    img.sizes = img.closest(".card") ? "(max-width: 519px) 86vw, (max-width: 1023px) 44vw, 280px" : "(max-width: 799px) 84vw, 420px";
+  });
+})();
+</script>
+</body>
+</html>
